@@ -24,6 +24,7 @@ import com.example.habits.repository.UserRepository
 import com.example.habits.screen.HabitListScreen
 import com.example.habits.screen.LoginScreen
 import com.example.habits.screen.RegisterScreen
+import com.example.habits.screen.WelcomeScreen
 import com.example.habits.ui.theme.HabitsTheme
 import com.example.habits.viewmodel.HabitViewModel
 import com.example.habits.viewmodel.UserViewModel
@@ -60,12 +61,19 @@ fun AppNavHost(userViewModel: UserViewModel, habitViewModel: HabitViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = if (loggedInUser == null) "login" else "habits"
-    ) {
+        startDestination = if (loggedInUser == null) "welcome" else "habits"
+    )
+
+    {
+        composable("welcome") {
+            WelcomeScreen(navController)
+        }
+
         composable("login") {
             LoginScreen(
                 viewModel = userViewModel,
-                onLoginSuccess = { navController.navigate("habits") }
+                onLoginSuccess = { navController.navigate("habits") },
+                onGoToRegister = {navController.navigate("register")}
 
 
             )

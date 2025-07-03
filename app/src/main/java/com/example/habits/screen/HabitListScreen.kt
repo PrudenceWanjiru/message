@@ -1,5 +1,7 @@
 package com.example.habits.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,10 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import com.example.habits.data.model.Habit
 import com.example.habits.viewmodel.HabitViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.text.isNotBlank
+
 
 
 @Composable
@@ -38,6 +44,11 @@ fun HabitListScreen(viewModel: HabitViewModel) {
     var habitDate by remember { mutableStateOf("") }
     var habitDescription by remember { mutableStateOf("") }
 
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF040228)))
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -77,13 +88,12 @@ fun HabitListScreen(viewModel: HabitViewModel) {
         Button(
             onClick = {
                 if (habitName.isNotBlank()) {
+                    val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
                     viewModel.addHabit(
                         Habit(
-                            id = 0,
                             name = habitName,
-                            date = habitDate,
+                            date = date,
                             description = habitDescription,
-                            isCompleted = false
                         )
                     )
                     habitName = ""
@@ -103,21 +113,21 @@ fun HabitListScreen(viewModel: HabitViewModel) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        val habits by viewModel.allHabits.collectAsState(initial = emptyList<List<Habit>>())
+        val habits by viewModel.allHabits.collectAsState(initial = emptyList())
 
 
         LazyColumn {
             items(habits) { habit ->
-                Card(
+               Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-//                        Text("Name: ${habit.name}")
-//                        Text("Date: ${habit.date}")
-//                        Text("Description: ${habit.description}")
+                        Text("Name: ${habit.name}")
+                        Text("Date: ${habit.date}")
+                        Text("Description: ${habit.description}")
 
                     }
                 }

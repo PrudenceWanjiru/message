@@ -25,6 +25,19 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
             repository.insertUser(user)
         }
     }
+//fun registerUser(user: Person, onResult: (Boolean) -> Unit) {
+//    viewModelScope.launch {
+//        try {
+//            repository.insertUser(user)
+//            onResult(true) // Registration successful
+//        } catch (e: Exception) {
+//            onResult(false) // Registration failed
+//        }
+//    }
+//}
+//}
+
+
 
     fun loginUser(email: String, password: String) {
         viewModelScope.launch {

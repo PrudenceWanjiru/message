@@ -9,7 +9,7 @@ import com.example.habits.data.dao.UserDao
 import com.example.habits.data.model.Habit
 import com.example.habits.data.model.Person
 
-@Database(entities = [Person::class, Habit::class], version = 2)
+@Database(entities = [Person::class, Habit::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun habitDao(): HabitDao
@@ -25,7 +25,10 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "habit_tracker_db"
-                ).build()
+
+                ).fallbackToDestructiveMigration()
+
+                    .build()
                 INSTANCE = instance
                 instance
             }

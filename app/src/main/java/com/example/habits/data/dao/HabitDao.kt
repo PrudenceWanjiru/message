@@ -27,4 +27,6 @@ interface HabitDao {
 
     @Query("SELECT * FROM habits WHERE date = :date")
     fun getHabitsByDate(date: String): Flow<List<Habit>>
+
+
 }

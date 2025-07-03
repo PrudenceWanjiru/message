@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 
 class HabitViewModel(private val repository: HabitRepository) : ViewModel() {
 
+
+
     val allHabits: StateFlow<List<Habit>> = repository.allHabits
         .stateIn(
             scope = viewModelScope,
@@ -23,6 +25,8 @@ class HabitViewModel(private val repository: HabitRepository) : ViewModel() {
             repository.insertHabit(habit)
         }
     }
+
+
 
     fun updateHabit(habit: Habit) {
         viewModelScope.launch {
