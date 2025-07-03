@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.habits.data.AppDatabase
 import com.example.habits.repository.HabitRepository
 import com.example.habits.repository.UserRepository
+import com.example.habits.screen.HabitDetailScreen
 import com.example.habits.screen.HabitListScreen
 import com.example.habits.screen.LoginScreen
 import com.example.habits.screen.RegisterScreen
@@ -89,6 +90,7 @@ fun AppNavHost(userViewModel: UserViewModel, habitViewModel: HabitViewModel) {
         composable("habits") {
             HabitListScreen(viewModel = habitViewModel)
         }
+       
     }
 }
 

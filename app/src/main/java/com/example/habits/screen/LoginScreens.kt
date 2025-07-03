@@ -1,5 +1,6 @@
 package com.example.habits.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,94 +24,106 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.habits.R
 import com.example.habits.viewmodel.UserViewModel
 import kotlin.let
 import kotlin.text.isBlank
 
-//@Composable
-//fun LoginScreen(
-//    viewModel: UserViewModel,
-//    onLoginSuccess: () -> Unit,
-//    onGoToRegister: () -> Unit = {}
-//) {
-//    var email by remember { mutableStateOf("") }
-//    var password by remember { mutableStateOf("") }
-//    var errorMessage by remember { mutableStateOf<String?>(null) }
-//
-//    val loggedInUser by viewModel.loggedInUser.collectAsState()
-//
-//    // Navigate on login
-//    LaunchedEffect(loggedInUser) {
-//        if (loggedInUser != null) {
-//            onLoginSuccess()
-//        }
-//    }
-//
+@Composable
+fun LoginScreen(
+    viewModel: UserViewModel,
+    onLoginSuccess: () -> Unit,
+    onGoToRegister: () -> Unit = {}
+) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    val loggedInUser by viewModel.loggedInUser.collectAsState()
+
+    // Navigate on login
+    LaunchedEffect(loggedInUser) {
+        if (loggedInUser != null) {
+            onLoginSuccess()
+        }
+    }
+
 //    Box(
 //        modifier = Modifier
 //            .fillMaxSize()
 //            .background(Color(0xFF240EA6)))
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(24.dp)
-//    ) {
-//        Text("Login", style = MaterialTheme.typography.titleLarge)
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        OutlinedTextField(
-//            value = email,
-//            onValueChange = { email = it },
-//            label = { Text("Email") },
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        OutlinedTextField(
-//            value = password,
-//            onValueChange = { password = it },
-//            label = { Text("Password") },
-//            visualTransformation = PasswordVisualTransformation(),
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        errorMessage?.let {
-//            Text(text = it, color = MaterialTheme.colorScheme.error)
-//            Spacer(modifier = Modifier.height(8.dp))
-//        }
-//
-//        Button(
-//            onClick = {
-//                if (email.isBlank() || password.isBlank()) {
-//                    errorMessage = "Please fill in both fields"
-//                } else {
-//                    viewModel.loginUser(email, password)
-//                    errorMessage = null
-//                }
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Login")
-//        }
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//
-//        TextButton(onClick = { onGoToRegister() }) {
-//            Text("Don't have an account? Register")
-//        }
-//
-//
-//    }
-//}
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.login2), // your image name
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+        ) {
+            Text("Login", style = MaterialTheme.typography.titleLarge, color = Color.White)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email", color = Color.White,fontWeight = FontWeight.Bold,) },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password", color = Color.White) },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            errorMessage?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
+            Button(
+                onClick = {
+                    if (email.isBlank() || password.isBlank()) {
+                        errorMessage = "Please fill in both fields"
+                    } else {
+                        viewModel.loginUser(email, password)
+                        errorMessage = null
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Login")
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            TextButton(onClick = { onGoToRegister() }) {
+                Text("Don't have an account? Register", color = Color.White)
+            }
+
+
+        }
+    }
+}
 
 
 
